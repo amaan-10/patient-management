@@ -1,7 +1,6 @@
 import AppointmentForm from "@/components/forms/AppointmentForm";
 import { getPatient } from "@/lib/actions/patient.actions";
 import Image from "next/image";
-import Link from "next/link";
 
 export default async function NewAppointment({
   params: { userId },
