@@ -69,7 +69,7 @@ const Success = async ({
             New Appointment
           </Link>
         </Button>
-        <p className="copyright">© CuraLink | 2024</p>
+        <p className="copyright">© CuraLink | 2024-25</p>
       </div>
     </div>
   );

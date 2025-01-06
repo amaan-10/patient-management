@@ -23,7 +23,7 @@ export default async function NewAppointment({
             patientId={patient.$id}
           />
 
-          <p className="copyright py-12">© CuraLink | 2024</p>
+          <p className="copyright py-12">© CuraLink | 2024-25</p>
         </div>
       </section>
       <Image
