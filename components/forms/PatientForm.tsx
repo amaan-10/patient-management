@@ -64,7 +64,7 @@ const PatientForm = () => {
           control={form.control}
           name="name"
           label="Full Name"
-          placeholder="John Doe"
+          placeholder="Amaan Shaikh"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
         />
@@ -73,7 +73,7 @@ const PatientForm = () => {
           control={form.control}
           name="email"
           label="Email"
-          placeholder="johndoe@gmail.com"
+          placeholder="amaan@example.com"
           iconSrc="/assets/icons/email.svg"
           iconAlt="email"
         />

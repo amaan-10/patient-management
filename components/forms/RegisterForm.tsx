@@ -105,7 +105,7 @@ const RegisterForm = ({ user }: { user: User }) => {
           control={form.control}
           name="name"
           label="Full Name"
-          placeholder="John Doe"
+          placeholder="Amaan Shaikh"
           iconSrc="/assets/icons/user.svg"
           iconAlt="user"
         />
@@ -115,7 +115,7 @@ const RegisterForm = ({ user }: { user: User }) => {
             control={form.control}
             name="email"
             label="Email"
-            placeholder="johndoe@gmail.com"
+            placeholder="amaan@example.com"
             iconSrc="/assets/icons/email.svg"
             iconAlt="email"
           />
