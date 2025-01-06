@@ -22,7 +22,7 @@ export default function Home({ searchParams }: SearchParamProps) {
 
           <div className="text-14-regular mt-12 flex justify-between">
             <p className="justify-items-end text-dark-600 xl:text-left">
-              © CuraLink | 2024
+              © CuraLink | 2024-25
             </p>
             <Link href="/?admin=true" className=" text-green-500">
               Admin
@@ -31,7 +31,7 @@ export default function Home({ searchParams }: SearchParamProps) {
         </div>
       </section>
       <Image
-        src="/assets/images/onboarding-img.png"
+        src="/assets/images/onboarding-img.jpeg"
         height={1000}
         width={1000}
         alt="patient"
