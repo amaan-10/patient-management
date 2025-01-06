@@ -51,6 +51,7 @@ const AdminDashboard = async () => {
         </section>
 
         <DataTable columns={columns} data={appointments.documents} />
+        <p className="copyright text-center">© CuraLink | 2024-25</p>
       </main>
     </div>
   );
