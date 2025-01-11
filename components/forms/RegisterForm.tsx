@@ -328,21 +328,21 @@ const RegisterForm = ({ user }: { user: User }) => {
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="treatmentConsent"
-          label="I consent to treatment"
+          label="I consent to receive treatment for my health condition"
         />
 
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="disclosureConsent"
-          label="I consent to disclosure of information"
+          label="I consent to the use and disclosure of my health information for the purpose of treatment"
         />
 
         <CustomFormField
           fieldType={FormFieldType.CHECKBOX}
           control={form.control}
           name="privacyConsent"
-          label="I consent to privacy policy"
+          label="I acknowledge that I have read and agree to the privacy policy"
         />
         <br />
         <SubmitButton isLoading={isLoading}>Submit and continue</SubmitButton>
