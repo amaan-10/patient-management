@@ -27,51 +27,55 @@ export const PatientFormDefaultValues = {
 };
 
 export const IdentificationTypes = [
-  "Birth Certificate",
-  "Driver's License",
+  "ABHA Card",
   "Medical Insurance Card/Policy",
-  "Military ID Card",
-  "National Identity Card",
+  "Aadhaar Card",
+  "PAN Card",
   "Passport",
-  "Resident Alien Card (Green Card)",
-  "Social Security Card",
-  "State ID Card",
+  "Driver's License",
+  "Birth Certificate",
   "Student ID Card",
   "Voter ID Card",
+  "Green Card",
+  "Service Identity Card",
 ];
 
 export const Doctors = [
   {
-    image: "/assets/images/dr-green.png",
-    name: "John Green",
+    image: "/assets/images/dr-kabir.png",
+    name: "Kabir Mehta",
   },
   {
-    image: "/assets/images/dr-cameron.png",
-    name: "Leila Cameron",
+    image: "/assets/images/dr-neelam.png",
+    name: "Neelam Kler",
   },
   {
-    image: "/assets/images/dr-livingston.png",
-    name: "David Livingston",
+    image: "/assets/images/dr-shetty.png",
+    name: "Devi Prasad Shetty",
   },
   {
-    image: "/assets/images/dr-peter.png",
-    name: "Evan Peter",
+    image: "/assets/images/dr-raghav.png",
+    name: "Raghav Sinha",
   },
   {
-    image: "/assets/images/dr-powell.png",
-    name: "Jane Powell",
+    image: "/assets/images/dr-shweta.png",
+    name: "Shweta Gopale",
   },
   {
-    image: "/assets/images/dr-remirez.png",
-    name: "Alex Ramirez",
+    image: "/assets/images/dr-naresh.png",
+    name: "Naresh Trehan",
   },
   {
-    image: "/assets/images/dr-lee.png",
-    name: "Jasmine Lee",
+    image: "/assets/images/dr-arsheen.png",
+    name: "Arsheen Shaikh",
   },
   {
-    image: "/assets/images/dr-cruz.png",
-    name: "Alyana Cruz",
+    image: "/assets/images/dr-roy.png",
+    name: "Neel Roy",
+  },
+  {
+    image: "/assets/images/dr-sudha.png",
+    name: "Sudha Murthy",
   },
   {
     image: "/assets/images/dr-sharma.png",
