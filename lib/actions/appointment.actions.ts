@@ -14,6 +14,45 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
             appointment
         )
 
+        if(!newAppointment) {
+          throw new Error("Appointment not found")
+      }
+
+      const emailMessage = `
+                <!DOCTYPE html>
+                <html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                          <img src="https://curalink-appointments.vercel.app/assets/icons/logo-full.svg" alt="CuraLink Logo" style="max-width: 200px; height:auto;">
+                        </div>
+                        <h2 style="text-align: center; color: #4CAF50;">Appointment Request Received</h2>
+                        <p>Dear <strong>Patient</strong>,</p>
+                        <p>We are pleased to inform you that your appointment request with 
+                        <strong>Dr. ${appointment.primaryPhysician}</strong> has been successfully received.</p>
+                        <p><strong>Requested Appointment Details:</strong></p>
+                        <ul style="list-style-type: none; padding: 0;">
+                            <li><strong>Date:</strong> ${formatDateTime(appointment.schedule!).dateOnly}</li>
+                            <li><strong>Time:</strong> ${formatDateTime(appointment.schedule!).timeOnly}</li>
+                        </ul>
+                        <p>Please note that this is a request, and the appointment is not yet confirmed. You will receive a confirmation email later today to finalize the appointment details.</p>
+                        <p style="margin: 20px 0;">
+                            If you have any questions or need further assistance, feel free to contact us at 
+                            <a href="mailto:workwithamaan.dev@gmail.com">workwithamaan.dev@gmail.com</a> or call us at <strong>(123) 456-7890</strong>.
+                        </p>
+                        <p>Thank you for choosing CuraLink. We look forward to serving you!</p>
+                        <p style="text-align: center; margin-top: 30px; color: #888; font-size: 12px;">
+                            This is an automated message. Please do not reply to this email.
+                        </p>
+                    </div>
+                </body>
+                </html>
+            `
+            const smsMessage = ` \nDear Patient,\nHello from CuraLink!\nYour appointment request with Dr. ${appointment.primaryPhysician} for ${formatDateTime(appointment.schedule!).dateOnly} at ${formatDateTime(appointment.schedule!).timeOnly} has been received successfully.\nPlease note, this is a request and not yet confirmed. You will receive a confirmation SMS later today.\n\nThank you for choosing CuraLink.`
+
+      await sendSMSNotification(appointment.userId, smsMessage)
+      await sendEmailNotification(appointment.userId, emailMessage, 'Thank you for Scheduling an Appointment')
+
         return parseStringify(newAppointment)
     } catch (error) {
         console.log(error)
@@ -112,9 +151,67 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
             throw new Error("Appointment not found")
         }
 
-        const smsMessage = `Hello from CuraLink. ${type === 'schedule' ? `Your appointment has been scheduled for ${formatDateTime(appointment.schedule!).dateTime} with Dr. ${appointment.primaryPhysician}` : `We regret to inform you that your appointment has been cancelled for the following reason: ${appointment.cancellationReason}`}.`
+        const smsMessage = `Hello from CuraLink. \n${type === 'schedule' ? `Your appointment has been scheduled for ${formatDateTime(appointment.schedule!).dateTime} with Dr. ${appointment.primaryPhysician}.\nPlease arrive 10-15 minutes early.\nIf you need to reschedule, contact us at workwithamaan.dev@gmail.com or (123) 456-7890.\nThank you, CuraLink.` : `We regret to inform you that your appointment has been cancelled for the following reason: ${appointment.cancellationReason}`}.\nFor rescheduling or inquiries, please contact workwithamaan.dev@gmail.com or (123) 456-7890.\nWe apologize for any inconvenience caused.\nThank you, CuraLink.`
+
+        const emailMessage = `
+                <!DOCTYPE html>
+                <html>
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                          <img src="https://curalink-appointments.vercel.app/assets/icons/logo-full.svg" alt="CuraLink Logo" style="max-width: 200px; height:auto;">
+                        </div>
+                        ${type === 'schedule' ? `
+                        <h2 style="text-align: center; color: #4CAF50;">Appointment Confirmation</h2>
+                        <p>Dear <strong>Patient</strong>,</p>
+                        
+                        <p>
+                          We are happy to confirm your appointment with <strong>Dr. ${appointment.primaryPhysician}</strong>.
+                          The details of your appointment are as follows:
+                        </p>
+
+                        <p><strong>Appointment Details:</strong></p>
+                        <ul style="list-style-type: none; padding: 0;">
+                          <li><strong>Date:</strong> ${formatDateTime(appointment.schedule!).dateOnly}</li>
+                          <li><strong>Time:</strong> ${formatDateTime(appointment.schedule!).timeOnly}</li>
+                        </ul>
+                        
+                        <p>
+                          Please arrive 10-15 minutes early for your appointment. If you need to reschedule or have any questions, feel free to contact us at <a href="mailto:workwithamaan.dev@gmail.com">workwithamaan.dev@gmail.com</a> or call us at <strong>(123) 456-7890</strong>.
+                        </p>
+
+                        <p>Thank you for choosing CuraLink. We look forward to seeing you!</p>
+                        ` : ` 
+                          <h2 style="text-align: center; color: #ff4d4d;">Appointment Cancellation</h2>
+      
+                          <p>Dear <strong>Patient</strong>,</p>
+                          
+                          <p>
+                            We regret to inform you that your appointment with <strong>Dr. ${appointment.primaryPhysician}</strong> scheduled for 
+                            <strong>${formatDateTime(appointment.schedule!).dateOnly}</strong> at <strong>${formatDateTime(appointment.schedule!).timeOnly}</strong> has been cancelled due to following reason: <br/>
+                            ${appointment.cancellationReason}
+                          </p>
+
+                          <p>
+                            We sincerely apologize for any inconvenience this may cause. If you would like to reschedule your appointment or need assistance, please contact us at <a href="mailto:support@curalink.com">support@curalink.com</a> or call us at <strong>(123) 456-7890</strong>.
+                          </p>
+
+                          <p>
+                            We are committed to providing you with the best care and will do our best to accommodate you at your earliest convenience.
+                          </p>
+
+                          <p>Thank you for your understanding, and we hope to serve you soon.</p>
+                          `}
+                        
+                        <p style="text-align: center; margin-top: 30px; color: #888; font-size: 12px;">
+                          This is an automated message. Please do not reply to this email.
+                        </p>
+                      </div>
+                    </body>
+                  </html>`
 
         await sendSMSNotification(userId, smsMessage)
+        await sendEmailNotification(userId, emailMessage, type === 'schedule' ? 'Confirmation: Your Appointment has scheduled' : 'Appologies: Your Appointment has been Cancelled')
 
         revalidatePath('/admin/dashboard')
         return parseStringify(updatedAppointment)
@@ -135,4 +232,19 @@ export const sendSMSNotification = async (userId: string, content: string) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+export const sendEmailNotification = async (userId: string, content: string, subject: string) => {
+  try {
+      const email = await messaging.createEmail(
+        ID.unique(),
+        subject,
+        content,
+        [],
+        [userId]
+      )
+      return parseStringify(email)
+  } catch (error) {
+      console.log(error)
+  }
 }
