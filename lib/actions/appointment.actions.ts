@@ -21,12 +21,12 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
       const emailMessage = `
                 <!DOCTYPE html>
                 <html>
-                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-                    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #f8fafc; ">
+                    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 18px; background-color: #131619; padding: 42px;">
                         <div style="text-align: center; margin-bottom: 20px;">
-                          <img src="https://curalink-appointments.vercel.app/assets/icons/logo-full.svg" alt="CuraLink Logo" style="max-width: 200px; height:auto;">
+                          <img src="https://curalink-appointments.vercel.app/assets/icons/logo-full.png" alt="CuraLink Logo" style="max-width: 200px; height:auto;">
                         </div>
-                        <h2 style="text-align: center; color: #4CAF50;">Appointment Request Received</h2>
+                        <h2 style="text-align: center; color: #24ae76;">Appointment Request Received</h2>
                         <p>Dear <strong>Patient</strong>,</p>
                         <p>We are pleased to inform you that your appointment request with 
                         <strong>Dr. ${appointment.primaryPhysician}</strong> has been successfully received.</p>
@@ -41,14 +41,14 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
                             <a href="mailto:workwithamaan.dev@gmail.com">workwithamaan.dev@gmail.com</a> or call us at <strong>(123) 456-7890</strong>.
                         </p>
                         <p>Thank you for choosing CuraLink. We look forward to serving you!</p>
-                        <p style="text-align: center; margin-top: 30px; color: #888; font-size: 12px;">
+                        <p style="text-align: center; margin-top: 30px; color: #76828d; font-size: 12px;">
                             This is an automated message. Please do not reply to this email.
                         </p>
                     </div>
                 </body>
                 </html>
             `
-            const smsMessage = ` \nDear Patient,\nHello from CuraLink!\nYour appointment request with Dr. ${appointment.primaryPhysician} for ${formatDateTime(appointment.schedule!).dateOnly} at ${formatDateTime(appointment.schedule!).timeOnly} has been received successfully.\nPlease note, this is a request and not yet confirmed. You will receive a confirmation SMS later today.\n\nThank you for choosing CuraLink.`
+            const smsMessage = ` \n\nDear Patient,\nHello from CuraLink!\nYour appointment request with Dr. ${appointment.primaryPhysician} for ${formatDateTime(appointment.schedule!).dateOnly} at ${formatDateTime(appointment.schedule!).timeOnly} has been received successfully.\nPlease note, this is a request and not yet confirmed. You will receive a confirmation SMS later today.\n\nThank you for choosing CuraLink.`
 
       await sendSMSNotification(appointment.userId, smsMessage)
       await sendEmailNotification(appointment.userId, emailMessage, 'Thank you for Scheduling an Appointment')
@@ -156,10 +156,10 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
         const emailMessage = `
                 <!DOCTYPE html>
                 <html>
-                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
-                    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 5px;">
+                <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #f8fafc; ">
+                    <div style="max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 18px; background-color: #131619; padding: 42px;">
                         <div style="text-align: center; margin-bottom: 20px;">
-                          <img src="https://curalink-appointments.vercel.app/assets/icons/logo-full.svg" alt="CuraLink Logo" style="max-width: 200px; height:auto;">
+                          <img src="https://curalink-appointments.vercel.app/assets/icons/logo-full.png" alt="CuraLink Logo" style="max-width: 200px; height:auto;">
                         </div>
                         ${type === 'schedule' ? `
                         <h2 style="text-align: center; color: #4CAF50;">Appointment Confirmation</h2>
@@ -188,8 +188,8 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
                           
                           <p>
                             We regret to inform you that your appointment with <strong>Dr. ${appointment.primaryPhysician}</strong> scheduled for 
-                            <strong>${formatDateTime(appointment.schedule!).dateOnly}</strong> at <strong>${formatDateTime(appointment.schedule!).timeOnly}</strong> has been cancelled due to following reason: <br/>
-                            ${appointment.cancellationReason}
+                            <strong>${formatDateTime(appointment.schedule!).dateOnly}</strong> at <strong>${formatDateTime(appointment.schedule!).timeOnly}</strong> has been cancelled due to following reason:- <br/>
+                            <strong>"${appointment.cancellationReason}"</strong>
                           </p>
 
                           <p>
@@ -211,7 +211,7 @@ export const updateAppointment = async ({appointmentId, userId, appointment, typ
                   </html>`
 
         await sendSMSNotification(userId, smsMessage)
-        await sendEmailNotification(userId, emailMessage, type === 'schedule' ? 'Confirmation: Your Appointment has scheduled' : 'Appologies: Your Appointment has been Cancelled')
+        await sendEmailNotification(userId, emailMessage, type === 'schedule' ? 'Confirmation: Your Appointment has Scheduled' : 'Apologies: Your Appointment has been Cancelled')
 
         revalidatePath('/admin/dashboard')
         return parseStringify(updatedAppointment)
