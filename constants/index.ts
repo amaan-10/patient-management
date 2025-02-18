@@ -57,18 +57,18 @@ export const Doctors = [
     image: "/assets/images/dr-raghav.png",
     name: "Raghav Sinha",
   },
-  {
-    image: "/assets/images/dr-shweta.png",
-    name: "Shweta Gopale",
-  },
+  // {
+  //   image: "/assets/images/dr-shweta.png",
+  //   name: "Shweta Gopale",
+  // },
   {
     image: "/assets/images/dr-naresh.png",
     name: "Naresh Trehan",
   },
-  {
-    image: "/assets/images/dr-arsheen.png",
-    name: "Arsheen Shaikh",
-  },
+  // {
+  //   image: "/assets/images/dr-arsheen.png",
+  //   name: "Arsheen Shaikh",
+  // },
   {
     image: "/assets/images/dr-roy.png",
     name: "Neel Roy",
